@@ -2,7 +2,6 @@
 language: node_js
 node_js:
   - "8"
-  - "9"
   - "10"
 
 sudo: false
@@ -10,9 +9,6 @@ dist: trusty
 
 addons:
   chrome: stable
-
-cache:
-  yarn: true
 
 env:
   # we recommend new addons test the current and previous LTS
@@ -32,21 +28,11 @@ matrix:
 
 before_install:
   - npm config set spin false
-  - npm install -g npm
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - yarn global add greenkeeper-lockfile@1
+  - npm install -g npm@6
   - npm --version
 
 install:
-  - yarn install
-
-before_script:
-  - greenkeeper-lockfile-update
-  - yarn check --integrity
-
-after_script:
-  - greenkeeper-lockfile-upload
+  - npm ci
 
 script:
   # Usually, it's ok to finish the test scenario without reverting
